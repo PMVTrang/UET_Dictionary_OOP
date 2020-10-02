@@ -1,32 +1,30 @@
 public class Word {
-    private String wordTarget;
-    private String wordExplain;
+    private String word;
+    private String definition;
 
     Word() {
-/*        wordExplain = "";
-        wordTarget = "";*/
+        word = "_Word_";
+        definition = "_Meaning_";
     }
 
-    Word(String word, String meaning) {
-        wordTarget = word;
-        wordExplain = meaning;
+    public Word(String word, String definition) {
+        this.word = word;
+        this.definition = definition;
     }
 
-    public String getWordTarget() {
-        return wordTarget;
+    public String getWord() {
+        return word;
     }
 
-    public String getWordExplain() {
-        return wordExplain;
+    public void setWord(String word) {
+        this.word = word;
     }
 
-    public void setWordTarget(String word) {
-        wordTarget = word;
+    public String getDefinition() {
+        return definition;
     }
 
-    public void setWordExplain(String word) {
-        wordExplain = word;
+    public void setDefinition(String definition) {
+        this.definition = definition;
     }
-
-
 }
