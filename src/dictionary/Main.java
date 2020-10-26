@@ -3,42 +3,15 @@ package dictionary;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javafx.util.Pair;
-
-
-/**
- * A dictionary is a set of Word instances. With available GUI:
- * A drop down box: containing languages to be translated to and from <...>: still working on it
- * A translate mode: translating a phrase, sentences...                     : havent done shit
- * Thesaurus:                                                               : haven't done shit
- * Login window                                                             <done>
- * Store login / sign up data
- * Edit word list
- * Loading screen
- * On screen keyboard
- * Check if connected to the internet
- * A right mouse click shows a ContextMenu
- * Set every size on scale??
- * Click on each word given in the list: the corresponding meaning would be shown in the center region  <done>
- * Search for a word in a search bar and show its meaning                   <done>
- * Find a better searching algorithm: binary search??
- * Recommend word while typing in the search bar
- * Pronunciation                                                            <done>but only with english</done>
- * Color and stuff
- * animation with css, html, ...
- * SQL?
- * Another feature: search history, saved words, back and forth button?
- *
- * - ... ?
-*/
 
 public class Main extends Application {
 
@@ -48,8 +21,8 @@ public class Main extends Application {
 
     private static final String EV_DICT_DATA = "src\\data\\E_V.txt";
     private static final String VE_DICT_DATA = "src\\data\\V_E.txt";
-    private static final String TEST_DATA1 = "src\\data\\TestData1.txt";
-    private static final String TEST_DATA2 = "src\\data\\TestData2.txt";
+    /*private static final String TEST_DATA1 = "src\\data\\TestData1.txt";
+    private static final String TEST_DATA2 = "src\\data\\TestData2.txt";*/
     private static final double MAIN_PREF_WIDTH = 1000;
     private static final double MAIN_PREF_HEIGHT = 700;
     private static final double SMALL_ICON_WIDTH = 45;
@@ -71,8 +44,6 @@ public class Main extends Application {
      */
     @Override
     public void start(Stage primaryStage) {
-
-        UserInteraction user = new UserInteraction();
         mainStage = primaryStage;
         listView = new ListView<>();
         definitionView = new WebView();
@@ -90,6 +61,7 @@ public class Main extends Application {
         MenuBar menuBar = new MenuBar();
         VBox leftBar = new VBox();
         VBox center = new VBox();
+        HBox bottomBar = new HBox();
 
         Menu mDictionary = new Menu("Dictionary");
         RadioMenuItem miEVdict = new RadioMenuItem(
@@ -112,13 +84,12 @@ public class Main extends Application {
             mainPane.setCenter(center);
         });
 
-        /*miVEdict.setSelected(true);
-        listView.setItems(VEdata);*/
         ToggleGroup toggleGroup = new ToggleGroup();
         toggleGroup.getToggles().add(miEVdict);
         toggleGroup.getToggles().add(miVEdict);
         mDictionary.getItems().addAll(miEVdict, miVEdict);
 
+//cant set on action on a menu
         Menu mTranslate = new Menu("Translate");
 //        Menu mThesaurus = new Menu("Thesaurus");
 //        Menu mOther = new Menu("Other");
@@ -126,13 +97,12 @@ public class Main extends Application {
         MenuItem miGoogleTranslate = new MenuItem("Google Translate");
         mTranslate.getItems().add(miGoogleTranslate);
 
-
         menuBar.getMenus().addAll(mDictionary, mTranslate);
 
         topBar.getChildren().add(menuBar);
 
         //Create the left bar which show words and search bar
-        leftBar.setPadding(new Insets(10));
+        leftBar.setPadding(new Insets(10, 0, 10, 0));
         TextField searchField = new TextField();
         searchField.setPromptText("Search...");
 
@@ -143,7 +113,7 @@ public class Main extends Application {
 //        Button onScreenKeyboard = new Button("osk");
         searchBar.getChildren().addAll(searchField);
 
-        HBox utilBar = new HBox();
+        HBox utilBar = new HBox(5);
         Button btnWordList = new Button("Words");
         Button btnSavedList = new Button("Saved");
         Button btnSearchedList = new Button("History");
@@ -167,11 +137,11 @@ public class Main extends Application {
         leftBar.setMargin(listView, new Insets(10));
         VBox.setVgrow(listView, Priority.ALWAYS);
 
-        //Create the center region showing the definition;
+//Create the center region showing the definition;
         HBox wordHBox = new HBox();
-        //I'm really stuck on naming those stupid variables
+    //I'm really stuck on naming those stupid variables
         Label bicara = new Label();
-//        bicara.setText(dictionary.getObListKeySet().toArray()[0].toString().toUpperCase());
+        //bicara.setText(dictionary.getObListKeySet().toArray()[0].toString().toUpperCase());
         Image imgSpeaker = new Image("file:src\\graphic\\speaker_icon.png",
                 SMALL_ICON_WIDTH, SMALL_ICON_HEIGHT, true, true);
         ImageView imgViewSpeaker = new ImageView(imgSpeaker);
@@ -180,7 +150,7 @@ public class Main extends Application {
             API.speak(bicara.getText());
         });
         bicara.setGraphic(imgViewSpeaker);
-//why they never say anything even if the photo url is incorrect???
+//why they never say anything even when the photo url is incorrect???
         ImageView imgViewSaver = new ImageView(new Image("file:src\\graphic\\saveStar_icon.png",
                 SMALL_ICON_WIDTH, SMALL_ICON_HEIGHT, true, true));
         imgViewSaver.setOnMouseClicked(event -> {
@@ -197,6 +167,9 @@ public class Main extends Application {
                 SMALL_ICON_WIDTH, SMALL_ICON_HEIGHT, true, true));
         imgViewDeleter.setOnMouseClicked(e ->{
             deleteUtil(bicara.getText());
+//this is cheating because i dont have time to work on reload the listView
+//..after delete a word without effecting the data yet.
+//..one solution might be changing the way listView is loaded
             if(miEVdict.isSelected()) {
                 dictionary.saveToFile(EV_DICT_DATA);
                 listView.setItems(dictionary.getObListKeySet(EV_DICT_DATA));
@@ -212,6 +185,7 @@ public class Main extends Application {
                 SMALL_ICON_WIDTH, SMALL_ICON_HEIGHT, true, true));
         imgViewAdder.setOnMouseClicked(e ->{
             String newWord = addWordUtil();
+//checking which dictionary is one everytime something happens is frustrating
             if(miEVdict.isSelected()) {
                 dictionary.saveToFile(EV_DICT_DATA);
                 listView.setItems(dictionary.getObListKeySet(EV_DICT_DATA));
@@ -250,10 +224,9 @@ public class Main extends Application {
         });
 
         //Create the bottom bar
-        HBox bottomBar = new HBox();
         Label btm = new Label("A dictionary by MT");
         bottomBar.getChildren().add(btm);
-
+        bottomBar.setAlignment(Pos.BASELINE_RIGHT);
 
         mainPane = new BorderPane();
         mainPane.setPrefSize(MAIN_PREF_WIDTH, MAIN_PREF_HEIGHT);
@@ -296,20 +269,14 @@ public class Main extends Application {
             mainPane.setCenter(vBoxTranslate);
         });
 
-        /*miGoogleTranslate.setOnAction(e -> {
-            mainPane.setLeft(leftBar);
-            mainPane.setCenter(center);
-        });*/
-
-
         primaryStage.setOnCloseRequest(event -> {
             event.consume();
             if(MessageBox.getConfirmation("Confirm Exit", null,"Do you want to save changes?")) {
-                if(miEVdict.isSelected()) {
+                /*if(miEVdict.isSelected()) {
                     dictionary.saveToFile(EV_DICT_DATA);
                 } else if(miVEdict.isSelected()) {
                     dictionary.saveToFile(VE_DICT_DATA);
-                }
+                }*/
                 primaryStage.close();
             }
         });
@@ -319,7 +286,10 @@ public class Main extends Application {
     }
 
     private void deleteUtil(String wordToDelete) {
-        dictionary.deleteWord(wordToDelete);
+        if(MessageBox.getConfirmation("Confirm delete", null,
+                "Are you sure to delete this word?")) {
+            dictionary.deleteWord(wordToDelete);
+        }
     }
 
     //return the newly added word
