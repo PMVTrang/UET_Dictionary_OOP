@@ -28,8 +28,8 @@ public class Word {
         this.meaning = meaning;
     }
 
-    @Override
+    /*@Override
     public String toString() {
         return "Word: " + word + "\n\tMeaning:" + meaning;
-    }
+    }*/
 }
