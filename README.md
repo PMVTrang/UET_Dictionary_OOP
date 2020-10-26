@@ -17,4 +17,4 @@ With the help of Google Translate API and FreeTTS
 
 ***
 
-_This project has not completed yet. This submission is for the grading._
+_This project has not been completed yet. This submission is for the grading._
