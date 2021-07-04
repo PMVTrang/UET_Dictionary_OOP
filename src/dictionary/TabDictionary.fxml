@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.web.WebView?>
+
+<SplitPane dividerPositions="0.342809364548495" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dictionary.TabDictionaryController">
+   <items>
+      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+         <children>
+            <TextField fx:id="searchField" layoutX="13.0" layoutY="15.0" onKeyReleased="#filterWordList" prefHeight="30.0" prefWidth="120.0" promptText="Search..." AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="69.0" AnchorPane.topAnchor="10.0" />
+            <ListView fx:id="wordListView" layoutX="13.0" layoutY="52.0" onMousePressed="#showDefinition" prefHeight="295.0" prefWidth="165.0" AnchorPane.bottomAnchor="51.0" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="45.0" />
+            <HBox layoutX="22.0" layoutY="362.0" prefHeight="30.0" prefWidth="154.0" spacing="20.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="13.0">
+               <children>
+                  <ImageView fx:id="dictionaryIcon" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../graphic/dictionary_icon.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="searchedHistoryIcon" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../graphic/searchHistory_icon.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="savedHistoryIcon" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../graphic/saveHistory_icon.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </HBox>
+            <VBox layoutX="143.0" layoutY="15.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="10.0">
+               <children>
+                  <RadioButton fx:id="evButton" accessibleRole="TOGGLE_BUTTON" mnemonicParsing="false" onAction="#updateWordList" selected="true" toggleGroup="$languageGroup">
+                     <graphic>
+                        <ImageView fitHeight="43.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../graphic/E-V_icon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <toggleGroup>
+                        <ToggleGroup fx:id="languageGroup" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton fx:id="veButton" accessibleRole="TOGGLE_BUTTON" mnemonicParsing="false" onAction="#updateWordList" toggleGroup="$languageGroup">
+                     <graphic>
+                        <ImageView fitHeight="43.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../graphic/V-E_icon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </RadioButton>
+               </children>
+            </VBox>
+         </children>
+         <padding>
+            <Insets bottom="5.0" />
+         </padding>
+      </AnchorPane>
+      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+         <children>
+            <Label prefHeight="30.0" prefWidth="312.0" text="Definition" AnchorPane.leftAnchor="13.0" AnchorPane.topAnchor="10.0" />
+            <ImageView fx:id="addIcon" fitHeight="30.0" fitWidth="30.0" layoutX="157.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="10.0">
+               <image>
+                  <Image url="@../graphic/add_icon.png" />
+               </image>
+            </ImageView>
+            <WebView fx:id="definitionView" layoutX="3.0" layoutY="37.0" prefHeight="307.0" prefWidth="375.0" AnchorPane.bottomAnchor="46.0" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="45.0" />
+            <HBox alignment="TOP_RIGHT" layoutX="13.0" layoutY="357.0" prefHeight="30.0" prefWidth="375.0" spacing="20.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="13.0">
+               <children>
+                  <ImageView fx:id="editIcon" fitHeight="46.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../graphic/pencilEdit_icon.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="deleteIcon" fitHeight="30.0" fitWidth="30.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../graphic/delete_icon.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="saveIcon" fitHeight="30.0" fitWidth="30.0" layoutX="40.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../graphic/saveStar_icon.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </HBox>
+         </children>
+      </AnchorPane>
+   </items>
+</SplitPane>

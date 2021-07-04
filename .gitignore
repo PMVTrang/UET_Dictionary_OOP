@@ -1,0 +1,10 @@
+# IntelliJ
+out/
+.idea/
+Dictionary.iml
+
+src/dictionary/DictionaryUtil.java
+src/dictionary/TestFreeTTS.java
+src/dictionary/TestFXML.java
+src/data/TestData1.txt
+src/data/TestData2.txt
