@@ -1,3 +1,4 @@
+/*
 package dictionary;
 
 import javafx.application.Application;
@@ -21,8 +22,10 @@ public class Main extends Application {
 
     private static final String EV_DICT_DATA = "src\\data\\E_V.txt";
     private static final String VE_DICT_DATA = "src\\data\\V_E.txt";
-    /*private static final String TEST_DATA1 = "src\\data\\TestData1.txt";
-    private static final String TEST_DATA2 = "src\\data\\TestData2.txt";*/
+    */
+/*private static final String TEST_DATA1 = "src\\data\\TestData1.txt";
+    private static final String TEST_DATA2 = "src\\data\\TestData2.txt";*//*
+
     private static final double MAIN_PREF_WIDTH = 1000;
     private static final double MAIN_PREF_HEIGHT = 700;
     private static final double SMALL_ICON_WIDTH = 45;
@@ -35,13 +38,15 @@ public class Main extends Application {
 
     Stage mainStage;
 
-    /*
+    */
+/*
      * The abstract start() method of Application class must be implemented by its subclasses.
      * Is called when the javafx app is started.
      * Na ná SDL with setTitle method and show() method to allow the window to appear.
      * @param primaryStage just an auto param of type Stage. nothing more special than other stage objects
      * @throws Exception
-     */
+     *//*
+
     @Override
     public void start(Stage primaryStage) {
         mainStage = primaryStage;
@@ -185,7 +190,7 @@ public class Main extends Application {
                 SMALL_ICON_WIDTH, SMALL_ICON_HEIGHT, true, true));
         imgViewAdder.setOnMouseClicked(e ->{
             String newWord = addWordUtil();
-//checking which dictionary is one everytime something happens is frustrating
+//checking which dictionary is on everytime something happens is frustrating
             if(miEVdict.isSelected()) {
                 dictionary.saveToFile(EV_DICT_DATA);
                 listView.setItems(dictionary.getObListKeySet(EV_DICT_DATA));
@@ -200,14 +205,16 @@ public class Main extends Application {
         wordHBox.getChildren().addAll(bicara, spacerHBox, imgViewAdder, imgViewDeleter, imgViewEditor, imgViewSaver);
         center.getChildren().addAll(wordHBox, definitionView);
 
-        /*
+        */
+/*
          * update the data immediately when any change occurs without waiting for a button confirmation
          * observable: the property whose value has changed
          * oldValue: the previous value of the property
          * newValue: the new value of the property
          * This is a lambda expression to implement changeListener() - functional interface
          * (differ from invalidationListener() which needs only 1 arg: observable)
-         */
+         *//*
+
         listView.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
                     bicara.setText(newValue.trim());
@@ -272,11 +279,13 @@ public class Main extends Application {
         primaryStage.setOnCloseRequest(event -> {
             event.consume();
             if(MessageBox.getConfirmation("Confirm Exit", null,"Do you want to save changes?")) {
-                /*if(miEVdict.isSelected()) {
+                */
+/*if(miEVdict.isSelected()) {
                     dictionary.saveToFile(EV_DICT_DATA);
                 } else if(miVEdict.isSelected()) {
                     dictionary.saveToFile(VE_DICT_DATA);
-                }*/
+                }*//*
+
                 primaryStage.close();
             }
         });
@@ -319,3 +328,4 @@ public class Main extends Application {
 }
 
 
+*/

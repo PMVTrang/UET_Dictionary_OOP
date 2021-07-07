@@ -22,17 +22,17 @@
             <ListView fx:id="wordListView" layoutX="13.0" layoutY="52.0" onMousePressed="#showDefinition" prefHeight="295.0" prefWidth="165.0" AnchorPane.bottomAnchor="51.0" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="45.0" />
             <HBox layoutX="22.0" layoutY="362.0" prefHeight="30.0" prefWidth="154.0" spacing="20.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="13.0">
                <children>
-                  <ImageView fx:id="dictionaryIcon" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="dictionaryIcon" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#updateWordList" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../graphic/dictionary_icon.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="searchedHistoryIcon" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="searchedHistoryIcon" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#showSearchedHistory" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../graphic/searchHistory_icon.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="savedHistoryIcon" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="savedHistoryIcon" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#showSavedHistory" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../graphic/saveHistory_icon.png" />
                      </image>
@@ -72,7 +72,7 @@
       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
          <children>
             <Label prefHeight="30.0" prefWidth="312.0" text="Definition" AnchorPane.leftAnchor="13.0" AnchorPane.topAnchor="10.0" />
-            <ImageView fx:id="addIcon" fitHeight="30.0" fitWidth="30.0" layoutX="157.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="10.0">
+            <ImageView fx:id="addIcon" fitHeight="30.0" fitWidth="30.0" layoutX="157.0" onMouseClicked="#addWord" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="10.0">
                <image>
                   <Image url="@../graphic/add_icon.png" />
                </image>
@@ -85,12 +85,12 @@
                         <Image url="@../graphic/pencilEdit_icon.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="deleteIcon" fitHeight="30.0" fitWidth="30.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="deleteIcon" fitHeight="30.0" fitWidth="30.0" layoutX="10.0" layoutY="10.0" onMouseClicked="#deleteWord" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../graphic/delete_icon.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="saveIcon" fitHeight="30.0" fitWidth="30.0" layoutX="40.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="saveIcon" fitHeight="30.0" fitWidth="30.0" layoutX="40.0" layoutY="10.0" onMouseClicked="#saveWord" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../graphic/saveStar_icon.png" />
                      </image>
