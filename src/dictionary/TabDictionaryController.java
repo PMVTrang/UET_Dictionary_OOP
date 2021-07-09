@@ -8,20 +8,20 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
+import javafx.scene.web.HTMLEditor;
 import javafx.scene.web.WebView;
 import javafx.util.Pair;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-//for next update: check on the showDefinition and the addWord method.
-//Add the functionality of editing a word
-
 public class TabDictionaryController implements Initializable {
     private static final String EV_DICT_DATA = "src\\data\\E_V.txt";
     private static final String VE_DICT_DATA = "src\\data\\V_E.txt";
     private Dictionary evDict;
     private Dictionary veDict;
+    private boolean isOnEditMode;
 //    ObservableList<String> evData;
 //    ObservableList<String> veData;
 
@@ -60,12 +60,6 @@ public class TabDictionaryController implements Initializable {
     @FXML
     public void updateWordList() {
         wordListView.setItems(getCurrentDictionary().getObListKeySet());
-        /*if (evButton.isSelected()) {
-            wordListView.setItems(dictionary.getObListKeySet(EV_DICT_DATA));
-        }
-        else if (veButton.isSelected()) {
-            wordListView.setItems(dictionary.getObListKeySet(VE_DICT_DATA));
-        }*/
         System.out.println("update word list");
     }
 
@@ -79,14 +73,10 @@ public class TabDictionaryController implements Initializable {
     void showDefinition() {
         String selectedString = wordListView.getSelectionModel().getSelectedItem();
         Word selectedWord = getCurrentDictionary().getMeaningInWordForm(selectedString);
-        if (selectedWord != null) {
-            String meaning = selectedWord.getMeaning();
-            System.out.println("Selected word: " + selectedString + "\n\t" + meaning);
-            definitionView.getEngine().loadContent(meaning, "text/html");
-            getCurrentDictionary().addToSearchedList(selectedString);
-        } else {
-            MessageBox.showWarning("", "", "This word is no longer available.");
-        }
+        String meaning = selectedWord.getMeaning();
+        System.out.println("Selected word: " + selectedString + "\n\t" + meaning);
+        definitionView.getEngine().loadContent(meaning, "text/html");
+        getCurrentDictionary().addToSearchedList(selectedString);
 
     }
 
@@ -100,7 +90,6 @@ public class TabDictionaryController implements Initializable {
     @FXML
     void showSavedHistory(MouseEvent event) {
         wordListView.setItems(getCurrentDictionary().getObListSavedWordList());
-
     }
 
     @FXML
@@ -126,15 +115,49 @@ public class TabDictionaryController implements Initializable {
             definitionView.getEngine().loadContent(newWord.getValue(), "text/html");
 
         } else {
-            MessageBox.showWarning("Warning", "You dumb ignorant shit", "Fill in all fields");
+            MessageBox.showWarning("Warning", "", "Fill in all fields đi you filthy ignorant");
         }
 
     }
 
     @FXML private WebView definitionView;
+    @FXML private HTMLEditor editDefinitionView;
+
 
     @FXML private ImageView editIcon;
     //consider using HTMLEditor instead of WebView for the definition view?
+    //hay tinh den truong hop click khi tu da bi xoa?? hay la da prevent khi show definition roi
+    @FXML
+    void editWord(MouseEvent event) {
+        isOnEditMode = true;
+        editDefinitionView.setVisible(true);
+        utilBottomBox.setVisible(false);
+        editUtilBottomBox.setVisible(true);
+        String selectedWord = wordListView.getSelectionModel().getSelectedItem();
+        String meaning = getCurrentDictionary().getMeaningInWordForm(selectedWord).getMeaning();
+        editDefinitionView.setHtmlText(meaning);
+        saveChangeButton.setOnAction(e -> {
+            String newMeaning = editDefinitionView.getHtmlText();
+            getCurrentDictionary().editWord(selectedWord, newMeaning);
+            editDefinitionView.setVisible(false);
+            utilBottomBox.setVisible(true);
+            editUtilBottomBox.setVisible(false);
+            showDefinition();
+        });
+        cancelChangeButton.setOnAction(e -> {
+            editDefinitionView.setVisible(false);
+            utilBottomBox.setVisible(true);
+            editUtilBottomBox.setVisible(false);
+            showDefinition();
+        });
+
+    }
+
+    @FXML private HBox utilBottomBox;
+    @FXML private HBox editUtilBottomBox;
+    @FXML private Button saveChangeButton;
+    @FXML private Button cancelChangeButton;
+
 
     @FXML private ImageView deleteIcon;
 
@@ -174,6 +197,7 @@ public class TabDictionaryController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         evDict = new Dictionary(EV_DICT_DATA);
         veDict = new Dictionary(VE_DICT_DATA);
+        isOnEditMode = true;
 
         wordListView.setItems(evDict.getObListKeySet());
     }

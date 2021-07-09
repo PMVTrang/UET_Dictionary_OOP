@@ -102,6 +102,8 @@ public class Dictionary {
     public void deleteWord(String word) {
         if(vocabulary.containsKey(word)) {
             vocabulary.remove(word);
+            savedWords.remove(word); //no error if it is not saved
+            searchedWords.remove(word);
         } else {
             MessageBox.showWarning("Not found", null, "You can't delete a not-yet-existed word");
         }
@@ -117,12 +119,8 @@ public class Dictionary {
     }
 
     public void editWord(String word, String newMeaning) {
-        if(vocabulary.containsKey(word)) {
-            Word chosenWord = getMeaningInWordForm(word);
-            chosenWord.setMeaning(SPLITTING_PATTERN + newMeaning);
-        } else {
-            MessageBox.showWarning("Not found", null, "You entered an non-existed word");
-        }
+        Word chosenWord = getMeaningInWordForm(word);
+        chosenWord.setMeaning(newMeaning);
     }
 
     public void saveToFile(String filePath) {
