@@ -24,6 +24,9 @@
                </content>
             </Tab>
             <Tab fx:id="tabTranslate" text="Translate">
+               <content>
+                  <fx:include source="TabTranslate.fxml" />
+               </content>
                
             </Tab>
          </tabs>

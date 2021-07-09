@@ -152,7 +152,7 @@ public class Main extends Application {
         ImageView imgViewSpeaker = new ImageView(imgSpeaker);
 //set action to bicara because imgSpeaker is now linked to bicara???
         bicara.setOnMouseClicked(event -> {
-            API.speak(bicara.getText());
+            GoogleTranslate.speak(bicara.getText());
         });
         bicara.setGraphic(imgViewSpeaker);
 //why they never say anything even when the photo url is incorrect???
@@ -251,17 +251,17 @@ public class Main extends Application {
         Button translateButton = new Button("Translate");
         TextArea textTranslated = new TextArea();
         ChoiceBox<String> translateFrom = new ChoiceBox<String>();
-        translateFrom.getItems().addAll(API.languageCodes.keySet());
-//        translateFrom.setValue((String) API.languageCodes.keySet().toArray()[0]);
+        translateFrom.getItems().addAll(GoogleTranslate.languageCodes.keySet());
+//        translateFrom.setValue((String) GoogleTranslate.languageCodes.keySet().toArray()[0]);
         translateFrom.setValue("Detect Language");
         ChoiceBox<String> translateTo = new ChoiceBox<String>();
-        translateTo.getItems().addAll(API.languageCodes.keySet());
+        translateTo.getItems().addAll(GoogleTranslate.languageCodes.keySet());
         translateTo.setValue("Vietnamese");
 
         translateButton.setOnAction(event -> {
             try{
                 String text = textToTranslate.getText();
-                textTranslated.setText(API.translate(translateFrom.getValue(), translateTo.getValue(), text));
+                textTranslated.setText(GoogleTranslate.translate(translateFrom.getValue(), translateTo.getValue(), text));
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
